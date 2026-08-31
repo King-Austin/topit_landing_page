@@ -16,6 +16,9 @@ import { type AppReleaseInfo, FALLBACK_RELEASE, fetchLatestRelease } from './lib
 import { APP_DATA } from './data/appData';
 import { DownloadCloud } from 'lucide-react';
 
+import { PlayProtectBadge } from './components/PlayProtectBadge';
+import { IosAlternativeBanner } from './components/IosAlternativeBanner';
+
 export function App() {
   const [releaseInfo, setReleaseInfo] = useState<AppReleaseInfo>(FALLBACK_RELEASE);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
@@ -82,6 +85,13 @@ export function App() {
           fileSizeMb={releaseInfo.fileSizeMb}
           onOpenGuide={() => setIsGuideOpen(true)}
         />
+
+        {/* Google Play Protect Verified Trust Badge */}
+        <PlayProtectBadge />
+
+        {/* iOS / PWA Alternative Banner */}
+        <IosAlternativeBanner />
+
 
         {/* Horizontal Screenshots Carousel */}
         <ScreenshotCarousel />
