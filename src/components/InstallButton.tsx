@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { DownloadCloud, CheckCircle2, ShieldCheck, Smartphone } from 'lucide-react';
+import React, { useState, useCallback } from 'react';
+import { DownloadCloud, ShieldCheck, Smartphone } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface InstallButtonProps {
   downloadUrl: string;
   version: string;
   fileSizeMb: number;
-  onOpenGuide: () => void;
+  onOpenGuide: (onDownloadCallback: () => void) => void;
 }
 
 export const InstallButton: React.FC<InstallButtonProps> = ({
@@ -19,21 +19,21 @@ export const InstallButton: React.FC<InstallButtonProps> = ({
   const [progress, setProgress] = useState(0);
   const [downloaded, setDownloaded] = useState(false);
 
-  const handleDownload = () => {
+  const startDownload = useCallback(() => {
     if (downloading) return;
     setDownloading(true);
-    setProgress(10);
+    setProgress(5);
 
-    // Simulate authentic progress feel before triggering native file download
+    // Simulate authentic loading bar progress before triggering native file download
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 90) {
           clearInterval(interval);
           return 90;
         }
-        return prev + Math.floor(Math.random() * 20) + 15;
+        return prev + Math.floor(Math.random() * 10) + 6;
       });
-    }, 150);
+    }, 250);
 
     setTimeout(() => {
       clearInterval(interval);
@@ -60,30 +60,31 @@ export const InstallButton: React.FC<InstallButtonProps> = ({
       } catch {
         // Confetti fallback
       }
+    }, 2000);
+  }, [downloading, downloadUrl, version]);
 
-      // Automatically offer the install guide after 1.2 seconds
-      setTimeout(() => {
-        onOpenGuide();
-      }, 1200);
-    }, 900);
+  const handleInstallClick = () => {
+    if (downloading || downloaded) return;
+    // Open the guide first, passing in the download callback
+    onOpenGuide(startDownload);
   };
 
   return (
     <div className="my-3 space-y-3">
       {/* Primary Action Button */}
       <button
-        onClick={handleDownload}
+        onClick={handleInstallClick}
         disabled={downloading}
-        className={`w-full py-3 sm:py-3.5 px-6 rounded-full font-medium text-sm sm:text-base flex items-center justify-center space-x-2 transition-all shadow-lg select-none relative overflow-hidden active:scale-[0.98] ${
+        className={`w-full py-3 sm:py-3.5 px-6 rounded-full font-medium text-sm sm:text-base flex items-center justify-center space-x-2 transition-all shadow-md select-none relative overflow-hidden active:scale-[0.98] cursor-pointer ${
           downloaded
-            ? 'bg-[#172554] text-[#93c5fd] border border-[#3b82f6]/40'
-            : 'bg-[#a8c7fa] hover:bg-[#c2e7ff] text-[#041e49] font-semibold'
+            ? 'bg-[#e8f0fe] text-[#0b57d0] border border-[#aecbfa]'
+            : 'bg-[#0b57d0] hover:bg-[#0842a0] text-white font-semibold'
         }`}
       >
         {/* Progress Fill Bar */}
         {downloading && (
           <div
-            className="absolute left-0 top-0 bottom-0 bg-[#3b82f6] transition-all duration-200 opacity-40"
+            className="absolute left-0 top-0 bottom-0 bg-[#0842a0] transition-all duration-300 ease-out opacity-40"
             style={{ width: `${progress}%` }}
           />
         )}
@@ -91,13 +92,13 @@ export const InstallButton: React.FC<InstallButtonProps> = ({
         <div className="relative z-10 flex items-center space-x-2">
           {downloading ? (
             <>
-              <div className="w-4 h-4 border-2 border-[#041e49] border-t-transparent rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               <span>Downloading Topit APK ({progress}%)...</span>
             </>
           ) : downloaded ? (
             <>
-              <CheckCircle2 className="w-5 h-5 text-[#60a5fa]" />
-              <span>Download Complete! Open File to Install</span>
+              <DownloadCloud className="w-5 h-5 text-[#0b57d0] animate-bounce" />
+              <span>Downloading... Check your Downloads</span>
             </>
           ) : (
             <>
@@ -109,12 +110,12 @@ export const InstallButton: React.FC<InstallButtonProps> = ({
       </button>
 
       {/* Sub-row helper links */}
-      <div className="flex items-center justify-between px-1 text-xs text-[#9aa0a6]">
+      <div className="flex items-center justify-between px-1 text-xs text-[#5f6368]">
         <button
-          onClick={onOpenGuide}
-          className="flex items-center space-x-1 text-[#8ab4f8] hover:text-[#a8c7fa] hover:underline transition-colors"
+          onClick={() => onOpenGuide(startDownload)}
+          className="flex items-center space-x-1 text-[#0b57d0] hover:text-[#0842a0] hover:underline transition-colors cursor-pointer"
         >
-          <ShieldCheck className="w-4 h-4 text-[#8ab4f8]" />
+          <ShieldCheck className="w-4 h-4 text-[#0b57d0]" />
           <span>How to install APK on Android</span>
         </button>
 
@@ -125,21 +126,21 @@ export const InstallButton: React.FC<InstallButtonProps> = ({
       </div>
 
       {/* Similar app / notice box matching screenshot */}
-      <div className="mt-4 p-3 bg-[#1e1e1e] rounded-xl border border-[#2d3033] flex items-center justify-between text-xs">
+      <div className="mt-4 p-3 bg-[#f8f9fa] rounded-xl border border-[#e8eaed] flex items-center justify-between text-xs">
         <div className="flex items-start space-x-2.5">
-          <div className="p-1.5 rounded-full bg-[#2d3033] text-[#8ab4f8] shrink-0 mt-0.5">
+          <div className="p-1.5 rounded-full bg-[#e8f0fe] text-[#0b57d0] shrink-0 mt-0.5">
             <Smartphone className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-[#f1f3f4] font-medium">Instant Android Deployment</div>
-            <div className="text-[#9aa0a6] text-[11px] mt-0.5">
+            <div className="text-[#202124] font-medium">Instant Android Deployment</div>
+            <div className="text-[#5f6368] text-[11px] mt-0.5">
               Direct official build (v{version}) verified by Websync Digital
             </div>
           </div>
         </div>
         <button
-          onClick={handleDownload}
-          className="text-[#8ab4f8] font-medium hover:underline text-xs shrink-0 ml-2"
+          onClick={handleInstallClick}
+          className="text-[#0b57d0] font-medium hover:underline text-xs shrink-0 ml-2 cursor-pointer"
         >
           Get APK
         </button>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, MoreVertical, Share2, ShieldCheck, DownloadCloud } from 'lucide-react';
+import { MoreVertical, Share2, ShieldCheck, DownloadCloud } from 'lucide-react';
 
 
 interface GooglePlayHeaderProps {
@@ -30,30 +30,19 @@ export const GooglePlayHeader: React.FC<GooglePlayHeaderProps> = ({ onDownloadCl
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#121212]/95 backdrop-blur-md border-b border-[#222] transition-all">
-      <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
-        {/* Left: Back Arrow & Google Play branding badge */}
-        <div className="flex items-center space-x-3">
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="p-2 -ml-2 rounded-full text-[#c4c7c5] hover:text-white hover:bg-[#282a2c] active:bg-[#333] transition-colors"
-            title="Back to Top"
-            aria-label="Back"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-          
-          <div className="flex items-center space-x-2">
-            <img src="/splash-icon-white.png" alt="Topit" className="w-9 h-9 rounded-md object-cover border border-white/10" />
-            <span className="text-sm font-bold tracking-tight text-[#e3e3e3] inline-block">Topit</span>
-          </div>
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#e8eaed] transition-all">
+      <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+        {/* Left: Topit Logo & Brand Name */}
+        <div className="flex items-center space-x-2.5">
+          <img src="/splash-icon.webp" alt="Topit" className="w-11 h-11 sm:w-12 sm:h-12 object-contain block" />
+          <span className="text-lg sm:text-xl font-bold tracking-tight text-[#202124] inline-block">Topit</span>
         </div>
 
         {/* Right: Search, Share, Quick APK action, Kebab Menu */}
         <div className="flex items-center space-x-1 sm:space-x-2">
           <button
             onClick={handleShare}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#8ab4f8] hover:bg-[#8ab4f8]/10 active:bg-[#8ab4f8]/20 transition-colors"
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#0b57d0] hover:bg-[#e8f0fe] active:bg-[#d2e3fc] transition-colors"
             title="Share with friends"
           >
             <Share2 className="w-4 h-4 shrink-0" />
@@ -62,16 +51,16 @@ export const GooglePlayHeader: React.FC<GooglePlayHeaderProps> = ({ onDownloadCl
 
           <button
             onClick={onGuideClick}
-            className="p-2 rounded-full text-[#c4c7c5] hover:text-white hover:bg-[#282a2c] transition-colors"
+            className="p-2 rounded-full text-[#5f6368] hover:text-[#202124] hover:bg-[#f1f3f4] transition-colors"
             title="Installation Guide"
             aria-label="Installation Guide"
           >
-            <ShieldCheck className="w-5 h-5 text-[#8ab4f8]" />
+            <ShieldCheck className="w-5 h-5 text-[#0b57d0]" />
           </button>
 
           <button
             onClick={onDownloadClick}
-            className="hidden md:flex items-center space-x-1.5 bg-[#2563eb] hover:bg-[#1d4ed8] text-white px-3.5 py-1.5 rounded-full text-xs font-medium transition-all shadow-md active:scale-95"
+            className="hidden md:flex items-center space-x-1.5 bg-[#0b57d0] hover:bg-[#0842a0] text-white px-3.5 py-1.5 rounded-full text-xs font-medium transition-all shadow-md active:scale-95 cursor-pointer"
           >
             <DownloadCloud className="w-4 h-4" />
             <span>Install APK</span>
@@ -80,7 +69,7 @@ export const GooglePlayHeader: React.FC<GooglePlayHeaderProps> = ({ onDownloadCl
           <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
-              className="p-2 rounded-full text-[#c4c7c5] hover:text-white hover:bg-[#282a2c] transition-colors"
+              className="p-2 rounded-full text-[#5f6368] hover:text-[#202124] hover:bg-[#f1f3f4] transition-colors"
               aria-label="More options"
             >
               <MoreVertical className="w-5 h-5" />
@@ -92,15 +81,15 @@ export const GooglePlayHeader: React.FC<GooglePlayHeaderProps> = ({ onDownloadCl
                   className="fixed inset-0 z-30"
                   onClick={() => setShowMenu(false)}
                 />
-                <div className="absolute right-0 mt-2 w-48 bg-[#28292a] border border-[#3c4043] rounded-xl shadow-2xl py-1.5 z-40 text-sm animate-in fade-in zoom-in-95 duration-150">
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-[#dadce0] rounded-xl shadow-2xl py-1.5 z-40 text-sm animate-in fade-in zoom-in-95 duration-150">
                   <button
                     onClick={() => {
                       setShowMenu(false);
                       onDownloadClick();
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-[#353739] text-[#e3e3e3] flex items-center space-x-2.5"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#f1f3f4] text-[#202124] flex items-center space-x-2.5"
                   >
-                    <DownloadCloud className="w-4 h-4 text-[#8ab4f8]" />
+                    <DownloadCloud className="w-4 h-4 text-[#0b57d0]" />
                     <span>Download APK v1.0.0</span>
                   </button>
                   <button
@@ -108,9 +97,9 @@ export const GooglePlayHeader: React.FC<GooglePlayHeaderProps> = ({ onDownloadCl
                       setShowMenu(false);
                       onGuideClick();
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-[#353739] text-[#e3e3e3] flex items-center space-x-2.5"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#f1f3f4] text-[#202124] flex items-center space-x-2.5"
                   >
-                    <ShieldCheck className="w-4 h-4 text-[#8ab4f8]" />
+                    <ShieldCheck className="w-4 h-4 text-[#0b57d0]" />
                     <span>Installation Instructions</span>
                   </button>
                   <button
@@ -118,14 +107,14 @@ export const GooglePlayHeader: React.FC<GooglePlayHeaderProps> = ({ onDownloadCl
                       setShowMenu(false);
                       handleShare();
                     }}
-                    className="w-full text-left px-4 py-2.5 hover:bg-[#353739] text-[#e3e3e3] flex items-center space-x-2.5"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#f1f3f4] text-[#202124] flex items-center space-x-2.5"
                   >
-                    <Share2 className="w-4 h-4 text-[#8ab4f8]" />
+                    <Share2 className="w-4 h-4 text-[#0b57d0]" />
                     <span>Share with friends</span>
                   </button>
                   <a
                     href="mailto:support@websyncdigital.com"
-                    className="w-full text-left px-4 py-2.5 hover:bg-[#353739] text-[#9aa0a6] hover:text-[#e3e3e3] block"
+                    className="w-full text-left px-4 py-2.5 hover:bg-[#f1f3f4] text-[#5f6368] hover:text-[#202124] block"
                     onClick={() => setShowMenu(false)}
                   >
                     Flag as inappropriate

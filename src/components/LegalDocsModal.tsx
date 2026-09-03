@@ -37,40 +37,40 @@ export const LegalDocsModal: React.FC<LegalDocsModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
       onClick={onClose}
     >
       <div
-        className="bg-[#1e1e1e] border border-[#3c4043] rounded-3xl max-w-2xl w-full flex flex-col max-h-[90vh] shadow-2xl relative text-left my-4 overflow-hidden animate-in zoom-in-95 duration-200"
+        className="bg-white border border-[#dadce0] rounded-3xl max-w-2xl w-full flex flex-col max-h-[90vh] shadow-2xl relative text-left my-4 overflow-hidden animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header & Close */}
-        <div className="px-6 py-5 border-b border-[#2d3033] flex items-center justify-between bg-[#1e1e1e] shrink-0">
+        <div className="px-6 py-5 border-b border-[#e8eaed] flex items-center justify-between bg-white shrink-0">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#8ab4f8]/15 border border-[#8ab4f8]/30 flex items-center justify-center text-[#8ab4f8]">
+            <div className="w-10 h-10 rounded-2xl bg-[#e8f0fe] border border-[#d2e3fc] flex items-center justify-center text-[#0b57d0]">
               {activeTab === 'terms' && <FileText className="w-5 h-5" />}
               {activeTab === 'privacy' && <Lock className="w-5 h-5" />}
               {activeTab === 'refund' && <RotateCcw className="w-5 h-5" />}
               {activeTab === 'security' && <ShieldCheck className="w-5 h-5" />}
             </div>
             <div>
-              <h2 className="text-lg sm:text-xl font-bold text-white tracking-tight">{currentDoc.title}</h2>
-              <p className="text-xs text-[#9aa0a6]">{currentDoc.subtitle}</p>
+              <h2 className="text-lg sm:text-xl font-bold text-[#202124] tracking-tight">{currentDoc.title}</h2>
+              <p className="text-xs text-[#5f6368]">{currentDoc.subtitle}</p>
             </div>
           </div>
 
           <div className="flex items-center space-x-2">
             <button
               onClick={handleCopyText}
-              className="px-3 py-1.5 rounded-full bg-[#2a2a2a] hover:bg-[#333] text-xs text-[#c4c7c5] hover:text-white transition-colors flex items-center space-x-1.5 hidden sm:flex"
+              className="px-3 py-1.5 rounded-full bg-[#f1f3f4] hover:bg-[#e8eaed] text-xs text-[#3c4043] hover:text-[#202124] transition-colors flex items-center space-x-1.5 hidden sm:flex cursor-pointer"
               title="Copy text"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-[#8ab4f8]" /> : <FileText className="w-3.5 h-3.5" />}
+              {copied ? <Check className="w-3.5 h-3.5 text-[#0b57d0]" /> : <FileText className="w-3.5 h-3.5" />}
               <span>{copied ? 'Copied' : 'Copy'}</span>
             </button>
             <button
               onClick={onClose}
-              className="p-2 rounded-full text-[#9aa0a6] hover:text-white hover:bg-[#2a2a2a] transition-colors"
+              className="p-2 rounded-full text-[#5f6368] hover:text-[#202124] hover:bg-[#f1f3f4] transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -79,7 +79,7 @@ export const LegalDocsModal: React.FC<LegalDocsModalProps> = ({
         </div>
 
         {/* Tab Navigation Pill Bar */}
-        <div className="px-6 py-2.5 bg-[#181818] border-b border-[#2d3033] flex items-center space-x-2 overflow-x-auto no-scrollbar shrink-0">
+        <div className="px-6 py-2.5 bg-[#f8f9fa] border-b border-[#e8eaed] flex items-center space-x-2 overflow-x-auto no-scrollbar shrink-0">
           {[
             { id: 'terms', label: 'Terms of Service', icon: FileText },
             { id: 'privacy', label: 'Privacy Policy', icon: Lock },
@@ -92,10 +92,10 @@ export const LegalDocsModal: React.FC<LegalDocsModalProps> = ({
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center space-x-1.5 shrink-0 transition-all ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center space-x-1.5 shrink-0 transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-[#2563eb] text-white shadow-md'
-                    : 'bg-[#242424] text-[#9aa0a6] hover:text-[#e3e3e3] hover:bg-[#2e2e2e]'
+                    ? 'bg-[#0b57d0] text-white shadow-md'
+                    : 'bg-[#e8eaed] text-[#5f6368] hover:text-[#202124] hover:bg-[#dadce0]'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -106,20 +106,20 @@ export const LegalDocsModal: React.FC<LegalDocsModalProps> = ({
         </div>
 
         {/* Document Content (Scrollable) */}
-        <div className="px-6 py-6 overflow-y-auto flex-1 space-y-6 text-xs sm:text-sm text-[#c4c7c5] leading-relaxed">
-          <div className="flex items-center justify-between pb-3 border-b border-[#2d3033] text-xs text-[#80868b]">
+        <div className="px-6 py-6 overflow-y-auto flex-1 space-y-6 text-xs sm:text-sm text-[#3c4043] leading-relaxed">
+          <div className="flex items-center justify-between pb-3 border-b border-[#e8eaed] text-xs text-[#70757a]">
             <span>Official Policy Document • Websync Digital</span>
             <span>Last Updated: {currentDoc.lastUpdated}</span>
           </div>
 
           {currentDoc.sections.map((section, idx) => (
             <div key={idx} className="space-y-2">
-              <h3 className="text-sm sm:text-base font-bold text-white tracking-tight">
+              <h3 className="text-sm sm:text-base font-bold text-[#202124] tracking-tight">
                 {section.title}
               </h3>
               <div className="space-y-2">
                 {section.content.map((p, pIdx) => (
-                  <p key={pIdx} className="text-[#a8aba9] leading-relaxed">
+                  <p key={pIdx} className="text-[#5f6368] leading-relaxed">
                     {p}
                   </p>
                 ))}
@@ -128,21 +128,21 @@ export const LegalDocsModal: React.FC<LegalDocsModalProps> = ({
           ))}
 
           {/* Contact info box */}
-          <div className="p-4 rounded-2xl bg-[#141414] border border-[#2d3033] space-y-1 text-xs text-[#9aa0a6]">
-            <div className="font-semibold text-white">Need Clarification or Legal Inquiries?</div>
+          <div className="p-4 rounded-2xl bg-[#f8f9fa] border border-[#e8eaed] space-y-1 text-xs text-[#5f6368]">
+            <div className="font-semibold text-[#202124]">Need Clarification or Legal Inquiries?</div>
             <p>For questions regarding our terms, refunds, or privacy practices, reach our compliance team at:</p>
-            <a href="mailto:support@websyncdigital.com" className="text-[#8ab4f8] hover:underline font-medium inline-block mt-1">
+            <a href="mailto:support@websyncdigital.com" className="text-[#0b57d0] hover:underline font-medium inline-block mt-1">
               support@websyncdigital.com
             </a>
           </div>
         </div>
 
         {/* Footer actions */}
-        <div className="px-6 py-4 border-t border-[#2d3033] bg-[#1e1e1e] flex items-center justify-between shrink-0">
-          <span className="text-xs text-[#80868b]">Topit by Websync Digital</span>
+        <div className="px-6 py-4 border-t border-[#e8eaed] bg-white flex items-center justify-between shrink-0">
+          <span className="text-xs text-[#70757a]">Topit by Websync Digital</span>
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-full bg-[#333] hover:bg-[#444] text-white text-xs font-semibold transition-colors"
+            className="px-5 py-2 rounded-full bg-[#f1f3f4] hover:bg-[#e8eaed] text-[#3c4043] text-xs font-semibold transition-colors cursor-pointer"
           >
             Close Document
           </button>

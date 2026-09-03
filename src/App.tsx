@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { GooglePlayHeader } from './components/GooglePlayHeader';
 import { AppSummaryHeader } from './components/AppSummaryHeader';
 import { MetricBar } from './components/MetricBar';
@@ -21,6 +21,9 @@ export default function App() {
   const [isLegalDocOpen, setIsLegalDocOpen] = useState(false);
   const [legalDocTab, setLegalDocTab] = useState<'terms' | 'privacy' | 'refund' | 'security'>('terms');
   const [showFloatingBar, setShowFloatingBar] = useState(false);
+
+  // Stores the download callback so the guide modal can trigger it
+  const downloadCallbackRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
     // Load dynamic build release info from Supabase
@@ -62,12 +65,38 @@ export default function App() {
     setIsLegalDocOpen(true);
   };
 
+  // Opens the guide modal and stores the download callback for later
+  const handleOpenGuideWithCallback = (downloadCallback: () => void) => {
+    downloadCallbackRef.current = downloadCallback;
+    setIsGuideOpen(true);
+  };
+
+  // Called when user clicks "Download APK Now" inside the guide modal
+  const handleGuideDownload = () => {
+    setIsGuideOpen(false);
+    // Small delay so the modal closes smoothly before the loading bar starts
+    setTimeout(() => {
+      if (downloadCallbackRef.current) {
+        downloadCallbackRef.current();
+        downloadCallbackRef.current = null;
+      } else {
+        triggerDirectDownload();
+      }
+    }, 300);
+  };
+
+  // Opens guide without a download callback (just for reading instructions)
+  const handleOpenGuideOnly = () => {
+    downloadCallbackRef.current = null;
+    setIsGuideOpen(true);
+  };
+
   return (
-    <div className="min-h-screen bg-[#121212] text-[#e3e3e3] flex flex-col font-['Google_Sans',sans-serif]">
+    <div className="min-h-screen bg-white text-[#202124] flex flex-col font-['Google_Sans',sans-serif]">
       {/* Topit App Top Bar */}
       <GooglePlayHeader
-        onDownloadClick={triggerDirectDownload}
-        onGuideClick={() => setIsGuideOpen(true)}
+        onDownloadClick={() => handleOpenGuideOnly()}
+        onGuideClick={() => handleOpenGuideOnly()}
       />
 
       {/* Main Content Area */}
@@ -86,7 +115,7 @@ export default function App() {
           downloadUrl={releaseInfo.downloadUrl}
           version={releaseInfo.version}
           fileSizeMb={releaseInfo.fileSizeMb}
-          onOpenGuide={() => setIsGuideOpen(true)}
+          onOpenGuide={handleOpenGuideWithCallback}
         />
 
         {/* Horizontal Screenshots Carousel */}
@@ -107,21 +136,21 @@ export default function App() {
 
       {/* Persistent Floating Bottom Install CTA on mobile when scrolled */}
       {showFloatingBar && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-[#1e1e1e]/95 backdrop-blur-md border-t border-[#333] shadow-2xl flex items-center justify-between sm:hidden animate-in slide-in-from-bottom duration-200">
+        <div className="fixed bottom-0 left-0 right-0 z-40 p-3 bg-white/95 backdrop-blur-md border-t border-[#e8eaed] shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center justify-between sm:hidden animate-in slide-in-from-bottom duration-200">
           <div className="flex items-center space-x-2.5 min-w-0 mr-2">
             <img
-              src="/icon.png"
+              src="/icon.webp"
               alt="Topit"
-              className="w-10 h-10 rounded-xl object-cover border border-white/10 shrink-0"
+              className="w-10 h-10 rounded-xl object-cover border border-[#e8eaed] shadow-xs shrink-0"
             />
             <div className="min-w-0">
-              <div className="text-xs font-bold text-white truncate">{APP_DATA.name}</div>
-              <div className="text-[10px] text-[#9aa0a6] truncate">v{releaseInfo.version} • {releaseInfo.fileSizeMb.toFixed(1)} MB</div>
+              <div className="text-xs font-bold text-[#202124] truncate">{APP_DATA.name}</div>
+              <div className="text-[10px] text-[#5f6368] truncate">v{releaseInfo.version} • {releaseInfo.fileSizeMb.toFixed(1)} MB</div>
             </div>
           </div>
           <button
-            onClick={triggerDirectDownload}
-            className="px-5 py-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-xs font-semibold flex items-center space-x-1.5 shrink-0 shadow-md active:scale-95"
+            onClick={() => handleOpenGuideOnly()}
+            className="px-5 py-2 rounded-full bg-[#0b57d0] hover:bg-[#0842a0] text-white text-xs font-semibold flex items-center space-x-1.5 shrink-0 shadow-md active:scale-95 cursor-pointer"
           >
             <DownloadCloud className="w-3.5 h-3.5" />
             <span>Install</span>
@@ -133,7 +162,7 @@ export default function App() {
       <ApkInstallGuideModal
         isOpen={isGuideOpen}
         onClose={() => setIsGuideOpen(false)}
-        onDownload={triggerDirectDownload}
+        onDownload={handleGuideDownload}
         version={releaseInfo.version}
       />
 

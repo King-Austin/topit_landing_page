@@ -67,50 +67,32 @@ It is not just better data. It is the future of staying connected.`,
     {
       id: 'slide-1',
       title: 'Buy Cheap SME & Direct Data at Wholesale Prices!',
-      subtitle: 'Instant 2-second automated delivery for MTN, Airtel & Glo',
+      subtitle: 'Instant automated delivery for MTN, Airtel & Glo',
       badge: 'Wholesale Rates',
       iconName: 'Smartphone',
       colorGradient: 'from-blue-500/20 via-indigo-500/10 to-transparent',
       screenType: 'data',
-      imagePath: '/feature-data.png'
+      imagePath: '/feature-data.webp'
     },
     {
       id: 'slide-2',
-      title: 'Airtime Recharge with Instant Cashback Rewards',
-      subtitle: 'Earn real cashback on every top-up and redeem anytime',
-      badge: 'Cashback on Every Recharge',
-      iconName: 'Gift',
-      colorGradient: 'from-amber-500/20 via-orange-500/10 to-transparent',
-      screenType: 'rewards',
-      imagePath: '/feature-rewards.png'
+      title: 'Set Smart Automations & Never Run Out of Data',
+      subtitle: 'Automate data and airtime renewals in seconds',
+      badge: 'Smart Automations',
+      iconName: 'Clock',
+      colorGradient: 'from-blue-500/20 via-indigo-500/10 to-transparent',
+      screenType: 'automations',
+      imagePath: '/feature-rewards.webp'
     },
     {
       id: 'slide-3',
-      title: 'Dedicated Virtual Accounts for Instant Funding',
-      subtitle: 'Dedicated Virtual Account funding',
-      badge: '99.9% Uptime',
-      iconName: 'Wallet',
+      title: 'Top Up Airtime in Seconds with Instant Delivery',
+      subtitle: 'Fast, simple, and reliable airtime top-ups',
+      badge: 'Instant Airtime',
+      iconName: 'Smartphone',
       colorGradient: 'from-blue-500/20 via-indigo-500/10 to-transparent',
-      screenType: 'wallet',
-      imagePath: '/feature-wallet.png'
-    },
-    {
-      id: 'slide-4',
-      title: 'Set Smart Automations & Never Run Out of Data',
-      subtitle: 'Schedule recurring daily, weekly, or monthly auto-topups',
-      badge: 'Zero Disruption',
-      iconName: 'Clock',
-      colorGradient: 'from-blue-600/20 via-indigo-500/10 to-transparent',
-      screenType: 'automations'
-    },
-    {
-      id: 'slide-5',
-      title: 'Generate & Export Branded Receipts in PDF & PNG',
-      subtitle: 'Clean, verified proof with one tap for records and reselling',
-      badge: 'Instant Receipt Proof',
-      iconName: 'Receipt',
-      colorGradient: 'from-cyan-500/20 via-blue-500/10 to-transparent',
-      screenType: 'receipt'
+      screenType: 'airtime',
+      imagePath: '/feature-wallet.webp'
     }
   ] as FeatureSlide[],
   reviews: [
