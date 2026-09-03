@@ -37,7 +37,7 @@ export const ApkInstallGuideModal: React.FC<ApkInstallGuideModalProps> = ({
 
         {/* Header */}
         <div className="flex items-center space-x-3 mb-4">
-          <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <div className="w-10 h-10 rounded-2xl bg-[#8ab4f8]/15 border border-[#8ab4f8]/30 flex items-center justify-center text-[#8ab4f8]">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
@@ -58,20 +58,20 @@ export const ApkInstallGuideModal: React.FC<ApkInstallGuideModalProps> = ({
         <div className="space-y-4 text-xs text-[#c4c7c5]">
           {/* Step 1 */}
           <div className="flex items-start space-x-3 p-3 bg-[#181818] rounded-xl border border-[#2d3033]">
-            <div className="w-6 h-6 rounded-full bg-[#01875f] text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-full bg-[#2563eb] text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
               1
             </div>
             <div>
               <div className="text-white font-semibold text-sm">Download the APK File</div>
               <p className="text-[#9aa0a6] mt-0.5">
-                Tap the <strong className="text-emerald-400">"Install"</strong> button. If Chrome or your browser asks <em>"File might be harmful?"</em>, tap <strong className="text-white">Download anyway</strong>.
+                Tap the <strong className="text-[#8ab4f8]">"Install"</strong> button. If Chrome or your browser asks <em>"File might be harmful?"</em>, tap <strong className="text-white">Download anyway</strong>.
               </p>
             </div>
           </div>
 
           {/* Step 2 */}
           <div className="flex items-start space-x-3 p-3 bg-[#181818] rounded-xl border border-[#2d3033]">
-            <div className="w-6 h-6 rounded-full bg-[#01875f] text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-full bg-[#2563eb] text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
               2
             </div>
             <div>
@@ -84,13 +84,13 @@ export const ApkInstallGuideModal: React.FC<ApkInstallGuideModalProps> = ({
 
           {/* Step 3 */}
           <div className="flex items-start space-x-3 p-3 bg-[#181818] rounded-xl border border-[#2d3033]">
-            <div className="w-6 h-6 rounded-full bg-[#01875f] text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
+            <div className="w-6 h-6 rounded-full bg-[#2563eb] text-white flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
               3
             </div>
             <div>
               <div className="text-white font-semibold text-sm">Allow Unknown Sources & Install</div>
               <p className="text-[#9aa0a6] mt-0.5">
-                If prompted, tap <strong className="text-white">Settings</strong> $\rightarrow$ switch on <strong className="text-white">"Allow from this source"</strong> $\rightarrow$ tap <strong className="text-emerald-400">Install</strong>.
+                If prompted, tap <strong className="text-white">Settings</strong> $\rightarrow$ switch on <strong className="text-white">"Allow from this source"</strong> $\rightarrow$ tap <strong className="text-[#8ab4f8]">Install</strong>.
               </p>
             </div>
           </div>
@@ -103,7 +103,7 @@ export const ApkInstallGuideModal: React.FC<ApkInstallGuideModalProps> = ({
               onClose();
               onDownload();
             }}
-            className="flex-1 py-3 bg-[#01875f] hover:bg-[#00a86b] text-white font-semibold rounded-full text-sm flex items-center justify-center space-x-2 transition-all shadow-lg active:scale-95"
+            className="flex-1 py-3 bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold rounded-full text-sm flex items-center justify-center space-x-2 transition-all shadow-lg active:scale-95"
           >
             <Download className="w-4 h-4" />
             <span>Download APK Now</span>

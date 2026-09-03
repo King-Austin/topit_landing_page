@@ -4,9 +4,8 @@
   :root {
     --play-bg: #121212;
     --play-surface: #1e1e1e;
-    --play-surface-variant: #2a2a2a;
-    --play-primary: #01875f;
-    --play-primary-hover: #00a86b;
+    --play-primary: #3b82f6;
+    --play-primary-hover: #2563eb;
     --play-secondary: #8ab4f8;
     --play-text: #e3e3e3;
     --play-text-muted: #9aa0a6;

@@ -17,15 +17,16 @@ export interface AppReleaseInfo {
 export const FALLBACK_RELEASE: AppReleaseInfo = {
   version: '1.0.0',
   buildNumber: 1,
-  fileSizeMb: 24.8,
-  releaseDate: 'Aug 2026',
-  downloadUrl: `${SUPABASE_URL}/storage/v1/object/public/app-releases/topit-latest.apk`,
+  fileSizeMb: 132.7,
+  releaseDate: 'Sep 1, 2026',
+  downloadUrl: '/topit-latest.apk',
   changelog: [
-    'Initial public release with lightning-fast VTU services',
-    'Instant Airtime and Data top-up for MTN, Airtel, Glo, and 9mobile',
-    'Automated electricity token generation (IKEDC, EKEDC, AEDC, etc.)',
-    'Cable TV instant subscription renewals (DStv, GOtv, Startimes)',
-    'Automated Smart Wallet funding and instant receipt export (PDF & PNG)',
+    'Initial public release with lightning-fast top-up services',
+    'Instant Airtime and Data top-up for MTN, Airtel, and Glo',
+    'Dedicated Virtual Account wallet funding with instant balance update',
+    '0.5% instant cashback on all airtime and data purchases',
+    'Smart automations and scheduled auto-renewals',
+    'Instant receipt generation & sharing in PDF and PNG',
     'Biometric security & instant transaction verification'
   ]
 };
@@ -48,7 +49,7 @@ export async function fetchLatestRelease(): Promise<AppReleaseInfo> {
       version: data.version || FALLBACK_RELEASE.version,
       buildNumber: data.build_number || FALLBACK_RELEASE.buildNumber,
       fileSizeMb: data.file_size_mb || FALLBACK_RELEASE.fileSizeMb,
-      releaseDate: data.created_at ? new Date(data.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : FALLBACK_RELEASE.releaseDate,
+      releaseDate: data.created_at ? new Date(data.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Sep 1, 2026',
       downloadUrl: data.download_url || FALLBACK_RELEASE.downloadUrl,
       changelog: data.changelog || FALLBACK_RELEASE.changelog,
     };

@@ -1,65 +1,70 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { APP_DATA } from '../data/appData';
-import { 
-  Wifi, 
-  Battery, 
-  ChevronRight, 
-  ChevronLeft,
-  Clock,
-  CheckCircle,
-  Coins,
-  Repeat
-} from 'lucide-react';
-
+import { Wifi, Battery, Coins, Repeat, Clock, CheckCircle } from 'lucide-react';
 
 export const ScreenshotCarousel: React.FC = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const [selectedSlide, setSelectedSlide] = useState<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -300 : 300;
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-  };
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    let animationId: number;
+    let lastTime = performance.now();
+    const speed = 40; // pixels per second
+
+    const scrollLoop = (time: number) => {
+      if (!isPaused && scrollContainer) {
+        const deltaTime = time - lastTime;
+        const scrollAmount = (speed * deltaTime) / 1000;
+        
+        scrollContainer.scrollLeft += scrollAmount;
+
+        // Reset scroll position to create seamless loop when half is scrolled
+        if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
+          scrollContainer.scrollLeft -= scrollContainer.scrollWidth / 2;
+        }
+      }
+      lastTime = time;
+      animationId = requestAnimationFrame(scrollLoop);
+    };
+
+    animationId = requestAnimationFrame(scrollLoop);
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused]);
+
+  // Duplicate slides for seamless infinite scrolling
+  const infiniteSlides = [...APP_DATA.featureSlides, ...APP_DATA.featureSlides];
 
   return (
-    <div className="my-6">
-      {/* Section Header */}
+    <div className="my-6 border-b border-[#282a2c] pb-8">
       <div className="flex items-center justify-between mb-3 px-1">
-        <h2 className="text-lg font-bold text-[#f1f3f4] tracking-tight">App Previews & Features</h2>
-        <div className="hidden sm:flex items-center space-x-1">
-          <button
-            onClick={() => scroll('left')}
-            className="p-1.5 rounded-full bg-[#1e1e1e] hover:bg-[#2a2a2a] text-[#c4c7c5] transition-colors border border-[#333]"
-            aria-label="Previous screenshots"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => scroll('right')}
-            className="p-1.5 rounded-full bg-[#1e1e1e] hover:bg-[#2a2a2a] text-[#c4c7c5] transition-colors border border-[#333]"
-            aria-label="Next screenshots"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+        <h2 className="text-base sm:text-lg font-bold text-[#f1f3f4]">
+          App Experience & Features
+        </h2>
+        <span className="text-xs text-[#9aa0a6]">Swipe to explore</span>
       </div>
 
-      {/* Horizontal Carousel */}
-      <div
+      {/* Horizontal Scrollable Screenshots Track */}
+      <div 
         ref={scrollRef}
-        className="flex space-x-4 overflow-x-auto no-scrollbar pb-3 pt-1 scroll-smooth snap-x snap-mandatory"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onTouchStart={() => setIsPaused(true)}
+        onTouchEnd={() => setIsPaused(false)}
+        className="flex space-x-4 overflow-x-auto no-scrollbar pb-3 pt-1 px-1"
       >
-        {APP_DATA.featureSlides.map((slide, idx) => (
+        {infiniteSlides.map((slide, idx) => (
           <div
-            key={slide.id}
-            onClick={() => setSelectedSlide(idx)}
-            className="shrink-0 w-[240px] sm:w-[270px] snap-start bg-[#1a1a1a] rounded-2xl overflow-hidden border border-[#2d3033] shadow-md hover:border-[#8ab4f8]/50 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 group"
+            key={`${slide.id}-${idx}`}
+            onClick={() => setSelectedSlide(idx % APP_DATA.featureSlides.length)}
+            className="shrink-0 w-[240px] sm:w-[270px] bg-[#1a1a1a] rounded-2xl overflow-hidden border border-[#2d3033] shadow-md hover:border-[#8ab4f8]/50 cursor-pointer transition-all duration-300 transform hover:-translate-y-1 group"
           >
             {/* Top Caption Header (Google Play style card banner) */}
             <div className="bg-gradient-to-b from-[#242424] to-[#1a1a1a] p-4 text-center border-b border-[#2d3033]">
-              <span className="inline-block px-2.5 py-0.5 mb-1.5 text-[10px] font-semibold tracking-wide uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
+              <span className="inline-block px-2.5 py-0.5 mb-1.5 text-[10px] font-semibold tracking-wide uppercase bg-blue-500/10 text-[#8ab4f8] border border-blue-500/20 rounded-full">
                 {slide.badge}
               </span>
               <h3 className="text-sm font-bold text-white leading-snug line-clamp-2">
@@ -70,25 +75,29 @@ export const ScreenshotCarousel: React.FC = () => {
             {/* Mobile Screen Mockup Rendering */}
             <div className="p-3 bg-[#0d0d0d] flex justify-center">
               <div className="w-[200px] h-[360px] bg-[#121212] rounded-[24px] border-[3px] border-[#333] shadow-2xl relative overflow-hidden flex flex-col">
-                {/* Status Bar */}
-                <div className="h-6 bg-[#000] px-3 flex items-center justify-between text-[9px] text-[#999]">
-                  <span className="font-semibold text-white">9:41</span>
-                  <div className="flex items-center space-x-1">
-                    <Wifi className="w-2.5 h-2.5" />
-                    <Battery className="w-2.5 h-2.5" />
-                  </div>
-                </div>
+                {slide.imagePath ? (
+                  <img src={slide.imagePath} alt={slide.title} className="w-full h-full object-cover" />
+                ) : (
+                  <>
+                    {/* Status Bar */}
+                    <div className="h-6 bg-[#000] px-3 flex items-center justify-between text-[9px] text-[#999]">
+                      <span className="font-semibold text-white">9:41</span>
+                      <div className="flex items-center space-x-1">
+                        <Wifi className="w-2.5 h-2.5" />
+                        <Battery className="w-2.5 h-2.5" />
+                      </div>
+                    </div>
 
                 {/* 1. DATA SCREEN */}
                 {slide.screenType === 'data' && (
-                  <div className="p-3 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#1a1f1c] to-[#121212]">
+                  <div className="p-3 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#141d2b] to-[#121212]">
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-[11px] font-bold text-white">Buy Cheap Data</span>
                         <div className="flex space-x-1">
                           <span className="text-[8px] px-1 py-0.5 rounded bg-amber-400/20 text-amber-300 font-bold">MTN</span>
                           <span className="text-[8px] px-1 py-0.5 rounded bg-red-500/20 text-red-400 font-bold">Airtel</span>
-                          <span className="text-[8px] px-1 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">Glo</span>
+                          <span className="text-[8px] px-1 py-0.5 rounded bg-blue-500/20 text-[#8ab4f8] font-bold">Glo</span>
                         </div>
                       </div>
 
@@ -99,30 +108,30 @@ export const ScreenshotCarousel: React.FC = () => {
                       </div>
 
                       <div className="space-y-1.5">
-                        <div className="p-2 bg-[#1e2320] rounded-lg border border-emerald-500/40 flex items-center justify-between">
+                        <div className="p-2 bg-[#162032] rounded-lg border border-blue-500/40 flex items-center justify-between">
                           <div>
                             <div className="text-[10px] font-bold text-white">1.0 GB SME Data</div>
                             <div className="text-[8px] text-[#888]">30 Days Validity</div>
                           </div>
-                          <span className="text-[10px] font-bold text-emerald-400">₦260</span>
+                          <span className="text-[10px] font-bold text-[#8ab4f8]">₦260</span>
                         </div>
                         <div className="p-2 bg-[#1b1b1b] rounded-lg border border-[#333] flex items-center justify-between">
                           <div>
                             <div className="text-[10px] font-bold text-white">2.0 GB SME Data</div>
                             <div className="text-[8px] text-[#888]">30 Days Validity</div>
                           </div>
-                          <span className="text-[10px] font-bold text-emerald-400">₦520</span>
+                          <span className="text-[10px] font-bold text-[#8ab4f8]">₦520</span>
                         </div>
                         <div className="p-2 bg-[#1b1b1b] rounded-lg border border-[#333] flex items-center justify-between">
                           <div>
                             <div className="text-[10px] font-bold text-white">5.0 GB Direct Gift</div>
                             <div className="text-[8px] text-[#888]">Instant Delivery</div>
                           </div>
-                          <span className="text-[10px] font-bold text-emerald-400">₦1,300</span>
+                          <span className="text-[10px] font-bold text-[#8ab4f8]">₦1,300</span>
                         </div>
                       </div>
                     </div>
-                    <div className="p-2 bg-[#01875f] text-center text-[10px] font-bold text-white rounded-lg shadow">
+                    <div className="p-2 bg-[#2563eb] text-center text-[10px] font-bold text-white rounded-lg shadow">
                       Instant Delivery ⚡
                     </div>
                   </div>
@@ -146,15 +155,15 @@ export const ScreenshotCarousel: React.FC = () => {
                       <div className="space-y-1.5 text-[8px] text-[#ccc]">
                         <div className="p-1.5 bg-[#1e1e1e] rounded border border-[#333] flex items-center justify-between">
                           <span>Airtel Airtime Cashback</span>
-                          <span className="text-emerald-400 font-bold">+₦75.00</span>
+                          <span className="text-[#8ab4f8] font-bold">+₦75.00</span>
                         </div>
                         <div className="p-1.5 bg-[#1e1e1e] rounded border border-[#333] flex items-center justify-between">
                           <span>MTN 5GB Data Cashback</span>
-                          <span className="text-emerald-400 font-bold">+₦120.00</span>
+                          <span className="text-[#8ab4f8] font-bold">+₦120.00</span>
                         </div>
                         <div className="p-1.5 bg-[#1e1e1e] rounded border border-[#333] flex items-center justify-between">
                           <span>Referral Bonus</span>
-                          <span className="text-emerald-400 font-bold">+₦500.00</span>
+                          <span className="text-[#8ab4f8] font-bold">+₦500.00</span>
                         </div>
                       </div>
                     </div>
@@ -202,7 +211,7 @@ export const ScreenshotCarousel: React.FC = () => {
                       <div className="p-2 bg-[#221c2f] border border-indigo-500/30 rounded-xl mb-2">
                         <div className="flex items-center justify-between text-[8px] text-indigo-200 mb-1">
                           <span className="font-bold">Auto-Renew Wi-Fi Data</span>
-                          <span className="text-emerald-400 font-bold bg-emerald-500/20 px-1 py-0.5 rounded">ACTIVE</span>
+                          <span className="text-[#8ab4f8] font-bold bg-blue-500/20 px-1 py-0.5 rounded">ACTIVE</span>
                         </div>
                         <div className="text-[10px] font-bold text-white">MTN 10GB Data Plan</div>
                         <div className="text-[8px] text-[#aaa]">Repeats: Every 7 Days</div>
@@ -214,7 +223,7 @@ export const ScreenshotCarousel: React.FC = () => {
                           <span>Intervals: 24h, 48h, 1 Week, 1 Month</span>
                         </div>
                         <div className="flex items-center space-x-1">
-                          <CheckCircle className="w-3 h-3 text-emerald-400" />
+                          <CheckCircle className="w-3 h-3 text-[#8ab4f8]" />
                           <span>Zero missed recharges guaranteed</span>
                         </div>
                       </div>
@@ -227,12 +236,12 @@ export const ScreenshotCarousel: React.FC = () => {
 
                 {/* 5. BRANDED RECEIPTS SCREEN */}
                 {slide.screenType === 'receipt' && (
-                  <div className="p-3 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#17211e] to-[#121212]">
+                  <div className="p-3 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#141d2b] to-[#121212]">
                     <div>
                       <div className="p-2.5 bg-white text-black rounded-lg shadow-md mb-2">
                         <div className="flex items-center justify-between border-b border-gray-200 pb-1 mb-1">
                           <span className="text-[9px] font-bold text-black">Topit Official Receipt</span>
-                          <span className="text-[7px] text-emerald-700 font-bold bg-emerald-100 px-1 py-0.5 rounded">SUCCESS</span>
+                          <span className="text-[7px] text-blue-700 font-bold bg-blue-100 px-1 py-0.5 rounded">SUCCESS</span>
                         </div>
                         <div className="text-[8px] text-gray-600">MTN 5.0 GB SME Data (0803***)</div>
                         <div className="text-[11px] font-bold text-gray-900">₦1,300.00</div>
@@ -243,7 +252,7 @@ export const ScreenshotCarousel: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex space-x-1">
-                      <div className="p-1.5 flex-1 bg-[#01875f] text-center text-[9px] font-bold text-white rounded-lg">
+                      <div className="p-1.5 flex-1 bg-[#2563eb] text-center text-[9px] font-bold text-white rounded-lg">
                         Download PDF
                       </div>
                       <div className="p-1.5 flex-1 bg-[#2a2a2a] text-center text-[9px] font-bold text-white rounded-lg">
@@ -251,6 +260,8 @@ export const ScreenshotCarousel: React.FC = () => {
                       </div>
                     </div>
                   </div>
+                )}
+                  </>
                 )}
               </div>
             </div>
@@ -265,10 +276,19 @@ export const ScreenshotCarousel: React.FC = () => {
           onClick={() => setSelectedSlide(null)}
         >
           <div
-            className="bg-[#1e1e1e] border border-[#333] rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl relative animate-in fade-in zoom-in-95 duration-200"
+            className="bg-[#1e1e1e] border border-[#333] rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl relative animate-in fade-in zoom-in-95 duration-200 flex flex-col items-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-semibold rounded-full border border-emerald-500/20 mb-3">
+            {APP_DATA.featureSlides[selectedSlide].imagePath && (
+              <div className="mb-5 w-full flex justify-center">
+                <img 
+                  src={APP_DATA.featureSlides[selectedSlide].imagePath} 
+                  alt={APP_DATA.featureSlides[selectedSlide].title} 
+                  className="max-h-[55vh] w-auto rounded-xl object-contain border border-[#333] shadow-lg"
+                />
+              </div>
+            )}
+            <div className="inline-block px-3 py-1 bg-blue-500/10 text-[#8ab4f8] text-xs font-semibold rounded-full border border-blue-500/20 mb-3">
               {APP_DATA.featureSlides[selectedSlide].badge}
             </div>
             <h3 className="text-lg font-bold text-white mb-2">
@@ -279,7 +299,7 @@ export const ScreenshotCarousel: React.FC = () => {
             </p>
             <button
               onClick={() => setSelectedSlide(null)}
-              className="w-full py-2.5 bg-[#01875f] hover:bg-[#00a86b] text-white font-semibold rounded-full text-sm transition-colors"
+              className="w-full py-2.5 bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold rounded-full text-sm transition-colors"
             >
               Close Preview
             </button>

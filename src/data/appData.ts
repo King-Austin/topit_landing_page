@@ -20,6 +20,7 @@ export interface FeatureSlide {
   iconName: string;
   colorGradient: string;
   screenType: 'data' | 'airtime' | 'rewards' | 'wallet' | 'receipt' | 'automations';
+  imagePath?: string;
 }
 
 export const APP_DATA = {
@@ -30,32 +31,37 @@ export const APP_DATA = {
   developerEmail: 'support@websyncdigital.com',
   developerAddress: 'Lagos, Nigeria',
   category: 'Finance',
-  inAppDetails: 'Contains ads • In-app purchases',
+  inAppDetails: 'In-app purchases',
   rating: 4.8,
-  reviewCountDisplay: '14.8K reviews',
-  downloadsDisplay: '50K+',
+  reviewCountDisplay: '700 reviews',
+  downloadsDisplay: '1K+',
   contentRating: 'Rated for 3+',
-  contentRatingNote: 'Digital Purchases',
-  lastUpdated: 'August 28, 2026',
-  about: `Topit is your high-speed, automated VTU and data top-up platform designed for instant connectivity, massive savings, and continuous cashback rewards.
+  about: `For years, buying mobile data and airtime has been broken. Slow banking apps, clunky forms, failed transactions, and zero rewards.
 
-⚡ Core Features & Capabilities:
-• Cheap SME & Direct Data: Buy cheap data bundles for MTN, Airtel, and Glo at wholesale discount prices with instant 2-second automated delivery.
-• Daily, Weekly & Night Plans: Choose curated data bundles tailored to your browsing needs with real-time balance tracking.
-• Instant Airtime Recharge: Top up airtime on all major Nigerian networks with automated delivery and instant cashback earnings.
-• Cashback & Referral Rewards: Earn real cashback on every single recharge. Redeem your accumulated cashback straight into your wallet anytime.
-• Dedicated Virtual Accounts: Get instant dedicated virtual bank accounts (Moniepoint MFB, Wema Bank, etc.) for zero-delay, automated wallet funding.
-• Smart Automations & Auto-Recharge: Schedule automated top-ups at intervals (daily, weekly, or monthly) so your devices never disconnect.
-• Instant Branded Receipts: Download and share professional PDF and PNG transaction receipts with reference tracking for personal records or reselling proof.
-• Biometric & PIN Security: Hardware-backed encryption, fingerprint/face login, and secure transaction PIN protection.`,
+Today, we are changing that forever.
+
+Meet Topit. It is not just an app — it is the most powerful, effortless connectivity experience ever built. Insanely fast, designed to save you real money, and engineered to just work.
+
+What makes Topit revolutionary:
+
+• Unbelievably Fast Delivery (2 Seconds): Direct, wholesale-priced data across MTN, Airtel, and Glo delivered in under two seconds with zero waiting.
+• Curated for the Way You Live: Daily streams, weekly grinds, midnight downloads — tailored bundles with real-time balance tracking.
+• Recharge Reimagined: Top up airtime on any Nigerian network with a single fluid swipe.
+• Real Cashback on Every Byte: Topit pays you 0.5% instant cashback on every single transaction. Real spendable cash, straight into your wallet.
+• Dedicated Virtual Bank Accounts: Instant dedicated virtual account funding with zero-delay automated deposits.
+• Smart Automations: Schedule recurring data top-ups daily, weekly, or monthly so you never experience unexpected disconnections.
+• Instant Branded Receipts: Download and share professional PDF and PNG transaction receipts with reference tracking.
+• Hardware-Level Security: Protected by biometric fingerprint and Face ID authentication with 4-strike security lockout defense.
+
+It is not just better data. It is the future of staying connected.`,
   tags: [
-    'Finance',
-    'Utilities',
-    'Cheap SME Data',
-    'Airtime Top-Up',
-    'Cashback Rewards',
-    'Smart Wallet',
-    'Automations'
+    'Insanely Fast Data',
+    'One-Swipe Recharge',
+    '0.5% Real Cash Back',
+    'Personal Bank Vault',
+    'Never Disconnect',
+    'Biometric Security',
+    'Instant Digital Proof'
   ],
   featureSlides: [
     {
@@ -64,8 +70,9 @@ export const APP_DATA = {
       subtitle: 'Instant 2-second automated delivery for MTN, Airtel & Glo',
       badge: 'Wholesale Rates',
       iconName: 'Smartphone',
-      colorGradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
-      screenType: 'data'
+      colorGradient: 'from-blue-500/20 via-indigo-500/10 to-transparent',
+      screenType: 'data',
+      imagePath: '/feature-data.png'
     },
     {
       id: 'slide-2',
@@ -74,16 +81,18 @@ export const APP_DATA = {
       badge: 'Cashback on Every Recharge',
       iconName: 'Gift',
       colorGradient: 'from-amber-500/20 via-orange-500/10 to-transparent',
-      screenType: 'rewards'
+      screenType: 'rewards',
+      imagePath: '/feature-rewards.png'
     },
     {
       id: 'slide-3',
       title: 'Dedicated Virtual Accounts for Instant Funding',
-      subtitle: 'Automated wallet funding via Moniepoint & Wema Bank',
+      subtitle: 'Dedicated Virtual Account funding',
       badge: '99.9% Uptime',
       iconName: 'Wallet',
       colorGradient: 'from-blue-500/20 via-indigo-500/10 to-transparent',
-      screenType: 'wallet'
+      screenType: 'wallet',
+      imagePath: '/feature-wallet.png'
     },
     {
       id: 'slide-4',
@@ -91,7 +100,7 @@ export const APP_DATA = {
       subtitle: 'Schedule recurring daily, weekly, or monthly auto-topups',
       badge: 'Zero Disruption',
       iconName: 'Clock',
-      colorGradient: 'from-purple-500/20 via-indigo-500/10 to-transparent',
+      colorGradient: 'from-blue-600/20 via-indigo-500/10 to-transparent',
       screenType: 'automations'
     },
     {
@@ -100,7 +109,7 @@ export const APP_DATA = {
       subtitle: 'Clean, verified proof with one tap for records and reselling',
       badge: 'Instant Receipt Proof',
       iconName: 'Receipt',
-      colorGradient: 'from-teal-500/20 via-emerald-500/10 to-transparent',
+      colorGradient: 'from-cyan-500/20 via-blue-500/10 to-transparent',
       screenType: 'receipt'
     }
   ] as FeatureSlide[],
@@ -108,15 +117,15 @@ export const APP_DATA = {
     {
       id: 'rev-1',
       author: 'Chinedu Okonkwo',
-      avatarColor: 'bg-emerald-600',
+      avatarColor: 'bg-blue-600',
       rating: 5,
-      date: 'August 24, 2026',
+      date: 'September 1, 2026',
       reviewText:
-        'Hands down the fastest data and airtime app in Nigeria! My MTN SME data was delivered in literally 2 seconds after funding my wallet. Also the PDF receipt generator is super clean for my data reselling customers.',
+        'I resell data bundles to students and clients. Before Topit, dealing with delayed bank deposits and unverified delivery was a constant headache. Now I fund my dedicated virtual account, dispatch SME bundles in seconds, and share the PDF receipt directly to WhatsApp. Has cut customer disputes down to zero.',
       helpfulCount: 142,
       developerResponse: {
-        date: 'August 25, 2026',
-        text: 'Thank you Chinedu! We are dedicated to providing the fastest 100% automated delivery.'
+        date: 'September 1, 2026',
+        text: 'Thank you Chinedu! Reliable delivery speed and traceable receipts are our top priority for reseller workflows.'
       }
     },
     {
@@ -124,9 +133,9 @@ export const APP_DATA = {
       author: 'Blessing Adeleke',
       avatarColor: 'bg-blue-600',
       rating: 5,
-      date: 'August 19, 2026',
+      date: 'September 1, 2026',
       reviewText:
-        'The cashback system is amazing. I earn cashback on all my Airtel airtime and data purchases, and I redeemed ₦1,800 back into my main wallet this morning without issues.',
+        'Working remotely means burning through data on Figma and client calls. I set up the weekly auto-renewal on my MTN line, so I haven’t had a single mid-meeting disconnect this month. The 0.5% cashback quietly accumulated around ₦1,800, which covered my weekend browsing.',
       helpfulCount: 98
     },
     {
@@ -134,13 +143,13 @@ export const APP_DATA = {
       author: 'Ibrahim Musa',
       avatarColor: 'bg-purple-600',
       rating: 5,
-      date: 'August 14, 2026',
+      date: 'September 1, 2026',
       reviewText:
-        'The UI is super smooth and responsive. Dedicated virtual account funding with Moniepoint reflects instantly with zero delay. Top work Websync Digital!',
+        'Most VTU apps in Nigeria feel bloated with ads and sluggish menus. Topit is fast and minimal. The biometric fingerprint key on the keypad saves me from typing a 4-digit PIN every single time I need a quick top-up on the go. Clean interface with no unnecessary steps.',
       helpfulCount: 76,
       developerResponse: {
-        date: 'August 15, 2026',
-        text: 'Glad you enjoy the clean experience Ibrahim! More rewards and features are coming.'
+        date: 'September 1, 2026',
+        text: 'Glad to hear this Ibrahim! We built the biometric swipe flow specifically to eliminate friction on repeat top-ups.'
       }
     },
     {
@@ -148,19 +157,19 @@ export const APP_DATA = {
       author: 'Amina Yusuf',
       avatarColor: 'bg-amber-600',
       rating: 5,
-      date: 'August 09, 2026',
+      date: 'September 1, 2026',
       reviewText:
-        'The auto-recharge automation is a lifesaver for my Wi-Fi router. I set it to renew every week and never worry about sudden disconnection.',
+        'I manage multiple devices across Airtel and MTN lines for content creation. The wholesale SME rates cut our team’s monthly connectivity budget by about 30%, and having transparent receipts in the History tab makes monthly expense tracking effortless.',
       helpfulCount: 43
     },
     {
       id: 'rev-5',
       author: 'Emmanuel Bassey',
       avatarColor: 'bg-rose-600',
-      rating: 5,
-      date: 'August 02, 2026',
+      rating: 4,
+      date: 'September 1, 2026',
       reviewText:
-        'Cheapest SME data rates anywhere and biometric fingerprint login makes checking balance and sending recharges super fast.',
+        'Reliable utility for keeping staff and dispatch phones active. Virtual account funding reflects in under 5 seconds, and if a telecom carrier fails, the wallet reverses automatically without having to message support. Would love bulk contact selection in the next build.',
       helpfulCount: 51
     }
   ] as Review[],

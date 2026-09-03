@@ -47,9 +47,9 @@ export const RatingsAndReviews: React.FC = () => {
                 key={star}
                 className={`w-3.5 h-3.5 ${
                   star <= Math.floor(APP_DATA.rating)
-                    ? 'fill-[#01875f] text-[#01875f]'
+                    ? 'fill-[#3b82f6] text-[#3b82f6]'
                     : star === 5
-                    ? 'fill-[#01875f]/80 text-[#01875f]/80'
+                    ? 'fill-[#3b82f6]/80 text-[#3b82f6]/80'
                     : 'fill-[#5f6368] text-[#5f6368]'
                 }`}
               />
@@ -65,7 +65,7 @@ export const RatingsAndReviews: React.FC = () => {
               <span className="w-2 font-medium text-[#c4c7c5] text-right">{item.stars}</span>
               <div className="flex-1 h-2.5 bg-[#282a2c] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-[#01875f] rounded-full transition-all duration-500"
+                  className="h-full bg-[#3b82f6] rounded-full transition-all duration-500"
                   style={{ width: `${item.percentage}%` }}
                 />
               </div>
@@ -87,7 +87,7 @@ export const RatingsAndReviews: React.FC = () => {
             onClick={() => setSelectedFilter(chip.id as any)}
             className={`px-3 py-1 rounded-full text-xs font-medium shrink-0 transition-colors flex items-center space-x-1 ${
               selectedFilter === chip.id
-                ? 'bg-[#004d3a] text-[#81c995] border border-[#01875f]'
+                ? 'bg-[#1e3a5f] text-[#93c5fd] border border-[#3b82f6]'
                 : 'bg-[#1e1e1e] text-[#c4c7c5] border border-[#333] hover:bg-[#282a2c]'
             }`}
           >
@@ -119,7 +119,7 @@ export const RatingsAndReviews: React.FC = () => {
                           key={star}
                           className={`w-3 h-3 ${
                             star <= review.rating
-                              ? 'fill-[#01875f] text-[#01875f]'
+                              ? 'fill-[#3b82f6] text-[#3b82f6]'
                               : 'fill-[#5f6368] text-[#5f6368]'
                           }`}
                         />
@@ -142,7 +142,7 @@ export const RatingsAndReviews: React.FC = () => {
                   onClick={() => toggleHelpful(review.id)}
                   className={`flex items-center space-x-1 text-xs py-1 px-2.5 rounded-full border transition-colors ${
                     isVoted
-                      ? 'bg-[#004d3a]/60 text-[#81c995] border-[#01875f]'
+                      ? 'bg-[#1e3a5f]/80 text-[#93c5fd] border-[#3b82f6]'
                       : 'border-[#333] hover:bg-[#282a2c] text-[#c4c7c5]'
                   }`}
                 >

@@ -39,7 +39,7 @@ export const DataSafetyCard: React.FC = () => {
         </div>
 
         <div className="flex items-start space-x-3">
-          <div className="p-1.5 rounded-lg bg-[#282a2c] text-[#81c995] shrink-0">
+          <div className="p-1.5 rounded-lg bg-[#282a2c] text-[#8ab4f8] shrink-0">
             <Lock className="w-4 h-4" />
           </div>
           <div>
@@ -51,7 +51,7 @@ export const DataSafetyCard: React.FC = () => {
         </div>
 
         <div className="flex items-start space-x-3">
-          <div className="p-1.5 rounded-lg bg-[#282a2c] text-emerald-400 shrink-0">
+          <div className="p-1.5 rounded-lg bg-[#282a2c] text-[#8ab4f8] shrink-0">
             <Trash2 className="w-4 h-4" />
           </div>
           <div>
@@ -80,7 +80,7 @@ export const DataSafetyCard: React.FC = () => {
             className="bg-[#1e1e1e] border border-[#3c4043] rounded-2xl max-w-md w-full p-6 text-left shadow-2xl relative animate-in fade-in zoom-in-95 duration-150"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center space-x-2 text-emerald-400 mb-2">
+            <div className="flex items-center space-x-2 text-[#8ab4f8] mb-2">
               <ShieldCheck className="w-5 h-5" />
               <h3 className="text-base font-bold text-white">Topit Data Safety Policy</h3>
             </div>
@@ -101,7 +101,7 @@ export const DataSafetyCard: React.FC = () => {
 
             <button
               onClick={() => setShowModal(false)}
-              className="mt-6 w-full py-2.5 bg-[#01875f] hover:bg-[#00a86b] text-white font-semibold rounded-full text-sm transition-colors"
+              className="mt-6 w-full py-2.5 bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold rounded-full text-sm transition-colors"
             >
               Got it
             </button>

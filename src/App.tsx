@@ -7,21 +7,19 @@ import { ScreenshotCarousel } from './components/ScreenshotCarousel';
 import { AboutSection } from './components/AboutSection';
 import { DataSafetyCard } from './components/DataSafetyCard';
 import { RatingsAndReviews } from './components/RatingsAndReviews';
-import { DeveloperContact } from './components/DeveloperContact';
-import { SimilarApps } from './components/SimilarApps';
 import { Footer } from './components/Footer';
 import { ApkInstallGuideModal } from './components/ApkInstallGuideModal';
+import { LegalDocsModal } from './components/LegalDocsModal';
 import { type AppReleaseInfo, FALLBACK_RELEASE, fetchLatestRelease } from './lib/supabase';
 
 import { APP_DATA } from './data/appData';
 import { DownloadCloud } from 'lucide-react';
 
-import { PlayProtectBadge } from './components/PlayProtectBadge';
-import { IosAlternativeBanner } from './components/IosAlternativeBanner';
-
-export function App() {
+export default function App() {
   const [releaseInfo, setReleaseInfo] = useState<AppReleaseInfo>(FALLBACK_RELEASE);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
+  const [isLegalDocOpen, setIsLegalDocOpen] = useState(false);
+  const [legalDocTab, setLegalDocTab] = useState<'terms' | 'privacy' | 'refund' | 'security'>('terms');
   const [showFloatingBar, setShowFloatingBar] = useState(false);
 
   useEffect(() => {
@@ -59,9 +57,14 @@ export function App() {
     }
   };
 
+  const handleOpenLegalDoc = (tab: 'terms' | 'privacy' | 'refund' | 'security') => {
+    setLegalDocTab(tab);
+    setIsLegalDocOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#121212] text-[#e3e3e3] flex flex-col font-['Google_Sans',sans-serif]">
-      {/* Google Play App Top Bar */}
+      {/* Topit App Top Bar */}
       <GooglePlayHeader
         onDownloadClick={triggerDirectDownload}
         onGuideClick={() => setIsGuideOpen(true)}
@@ -86,13 +89,6 @@ export function App() {
           onOpenGuide={() => setIsGuideOpen(true)}
         />
 
-        {/* Google Play Protect Verified Trust Badge */}
-        <PlayProtectBadge />
-
-        {/* iOS / PWA Alternative Banner */}
-        <IosAlternativeBanner />
-
-
         {/* Horizontal Screenshots Carousel */}
         <ScreenshotCarousel />
 
@@ -105,14 +101,8 @@ export function App() {
         {/* Ratings and Reviews Section */}
         <RatingsAndReviews />
 
-        {/* Developer Contact Drawer */}
-        <DeveloperContact />
-
-        {/* Similar Utility Apps */}
-        <SimilarApps />
-
         {/* Footer */}
-        <Footer />
+        <Footer onOpenDoc={handleOpenLegalDoc} />
       </main>
 
       {/* Persistent Floating Bottom Install CTA on mobile when scrolled */}
@@ -131,7 +121,7 @@ export function App() {
           </div>
           <button
             onClick={triggerDirectDownload}
-            className="px-5 py-2 rounded-full bg-[#01875f] hover:bg-[#00a86b] text-white text-xs font-semibold flex items-center space-x-1.5 shrink-0 shadow-md active:scale-95"
+            className="px-5 py-2 rounded-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-xs font-semibold flex items-center space-x-1.5 shrink-0 shadow-md active:scale-95"
           >
             <DownloadCloud className="w-3.5 h-3.5" />
             <span>Install</span>
@@ -146,8 +136,13 @@ export function App() {
         onDownload={triggerDirectDownload}
         version={releaseInfo.version}
       />
+
+      {/* Legal & Policy Documentation Modal */}
+      <LegalDocsModal
+        isOpen={isLegalDocOpen}
+        onClose={() => setIsLegalDocOpen(false)}
+        initialTab={legalDocTab}
+      />
     </div>
   );
 }
-
-export default App;

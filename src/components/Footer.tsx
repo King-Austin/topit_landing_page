@@ -1,27 +1,52 @@
 import React from 'react';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  onOpenDoc?: (tab: 'terms' | 'privacy' | 'refund' | 'security') => void;
+}
+
+export const Footer: React.FC<FooterProps> = ({ onOpenDoc }) => {
   return (
     <footer className="mt-12 pt-8 pb-12 border-t border-[#282a2c] text-xs text-[#9aa0a6]">
-      <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6">
-        <a href="#play" className="hover:text-[#e3e3e3] transition-colors">Google Play</a>
-        <a href="#play-pass" className="hover:text-[#e3e3e3] transition-colors">Play Pass</a>
-        <a href="#play-points" className="hover:text-[#e3e3e3] transition-colors">Play Points</a>
-        <a href="#gift-cards" className="hover:text-[#e3e3e3] transition-colors">Gift cards</a>
-        <a href="#redeem" className="hover:text-[#e3e3e3] transition-colors">Redeem</a>
-        <a href="#refund-policy" className="hover:text-[#e3e3e3] transition-colors">Refund policy</a>
+      {/* Primary Section Links */}
+      <div className="flex flex-wrap gap-x-6 gap-y-2 mb-4">
+        <a href="#about" className="hover:text-[#e3e3e3] transition-colors">About Topit</a>
+        <a href="#features" className="hover:text-[#e3e3e3] transition-colors">Features</a>
+        <a href="#ratings-section" className="hover:text-[#e3e3e3] transition-colors">Ratings & Reviews</a>
+        <a href="mailto:support@websyncdigital.com" className="hover:text-[#e3e3e3] transition-colors">Contact Support</a>
       </div>
 
+      {/* Legal & Policy Documentation Links */}
       <div className="flex flex-wrap gap-x-6 gap-y-2 mb-6 text-[11px] text-[#80868b]">
-        <a href="#terms" className="hover:text-[#bdc1c6]">Terms of Service</a>
-        <a href="#privacy" className="hover:text-[#bdc1c6]">Privacy</a>
-        <a href="#about-google-play" className="hover:text-[#bdc1c6]">About Google Play</a>
-        <a href="#developers" className="hover:text-[#bdc1c6]">Developers</a>
-        <a href="#google-store" className="hover:text-[#bdc1c6]">Google Store</a>
+        <button
+          onClick={() => onOpenDoc?.('terms')}
+          className="hover:text-[#bdc1c6] transition-colors text-left"
+        >
+          Terms of Service
+        </button>
+        <button
+          onClick={() => onOpenDoc?.('privacy')}
+          className="hover:text-[#bdc1c6] transition-colors text-left"
+        >
+          Privacy Policy
+        </button>
+        <button
+          onClick={() => onOpenDoc?.('refund')}
+          className="hover:text-[#bdc1c6] transition-colors text-left"
+        >
+          Refund & Reversal Policy
+        </button>
+        <button
+          onClick={() => onOpenDoc?.('security')}
+          className="hover:text-[#bdc1c6] transition-colors text-left"
+        >
+          Data Safety & Security
+        </button>
       </div>
 
-      <div className="text-[11px] text-[#5f6368]">
-        All prices include VAT. Topit is distributed by Websync Digital.
+      {/* Copyright & Publisher */}
+      <div className="text-[11px] text-[#5f6368] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <span>© {new Date().getFullYear()} Topit by Websync Digital. All rights reserved.</span>
+        <span>Licensed Utility & Value Added Telecommunication Services</span>
       </div>
     </footer>
   );
