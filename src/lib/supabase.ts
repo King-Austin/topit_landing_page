@@ -50,7 +50,7 @@ export async function fetchLatestRelease(): Promise<AppReleaseInfo> {
       buildNumber: data.build_number || FALLBACK_RELEASE.buildNumber,
       fileSizeMb: data.file_size_mb || FALLBACK_RELEASE.fileSizeMb,
       releaseDate: data.created_at ? new Date(data.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Sep 1, 2026',
-      downloadUrl: data.download_url || FALLBACK_RELEASE.downloadUrl,
+      downloadUrl: FALLBACK_RELEASE.downloadUrl, // Force use of R2 URL instead of DB
       changelog: data.changelog || FALLBACK_RELEASE.changelog,
     };
   } catch (err) {
