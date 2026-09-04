@@ -17,9 +17,9 @@ export interface AppReleaseInfo {
 export const FALLBACK_RELEASE: AppReleaseInfo = {
   version: '1.0.0',
   buildNumber: 1,
-  fileSizeMb: 132.7,
-  releaseDate: 'Sep 1, 2026',
-  downloadUrl: '/topit-latest.apk',
+  fileSizeMb: 130.0,
+  releaseDate: 'Sep 4, 2026',
+  downloadUrl: 'https://pub-8c9cb004490b4664a476827bddd99b8e.r2.dev/topit/topit-latest.apk',
   changelog: [
     'Initial public release with lightning-fast top-up services',
     'Instant Airtime and Data top-up for MTN, Airtel, and Glo',
